@@ -1,0 +1,11 @@
+{
+  "rules":[
+    {
+      "name": "STOPSHIP",
+      "pattern": "stopship",
+      "description": "STOPSHIP comments are an indicator that code changes around it should not make it to production",
+      "flags":"--go",
+      "path":""
+    }
+  ]
+}
