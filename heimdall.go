@@ -57,16 +57,20 @@ func RuleHasViolations(rule Rule) bool {
 			command.Args = append(command.Args, flag)
 		}
 	}
+	command.Args = append(command.Args, "--color")
+	command.Args = append(command.Args, "--heading")
 	command.Args = append(command.Args, rule.Pattern)
 	if len(rule.Path) > 0 {
 		command.Args = append(command.Args, rule.Path)
 	}
-	command.Stdout = os.Stdout
+	
 	command.Stderr = os.Stderr
-	err := command.Run()
+	output, _ := command.Output()
+	outputLength := len(output)
+	os.Stdout.Write(output)
 
-	if err == nil {
+	if outputLength > 0 {
 		fmt.Printf("\nRule '%v' was violated:\n%v'\n\n", rule.Name, rule.Description)
 	}
-	return err == nil
+	return outputLength > 0
 }
